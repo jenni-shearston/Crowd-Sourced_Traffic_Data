@@ -112,14 +112,14 @@ captured_datetime_vector_formatted <- reformat_captured_datetime_vector(
 #          It is highly recommended that you first run the function for one 
 #          week of time, to get a sense of how long it will take to run
 #          your full datetime vector. A year's worth of analysis for a large
-#          city at hourly resolution may take ~ 10-15 hours.
+#          city at hourly resolution may take ~ 1-2 hours.
 #          method can be set to 'parallel' to use parallelization (n-1 cores) 
 #          or 'forloop' to use a single core
 tictoc::tic('completes 1 week of NYC subset')
 gt_timeseries <- 
   get_gt_timeseries(captured_datetime_vector_filename = captured_datetime_vector_formatted, 
                     dir_output = 'outputs/Rtutorials', 
-                    name_output = 'bronx_polygons_example_timeseries',
+                    name_output = 'nyc_subarea_example_timeseries',
                     gt_dir = gt_dir,
                     method = 'parallel')
 tictoc::toc()

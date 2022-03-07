@@ -69,7 +69,7 @@ get_gt_timepoint <- function(captured_datetime_filename,
                        gt_pixcount_background   = sum(gt_cat == 9),
                        gt_pixcount_tot          = n()) %>% 
       dplyr::mutate(captured_datetime = captured_datetime) %>% 
-      dplyr::select(-gt_cat, captured_datetime, everything())
+      dplyr::select(captured_datetime, everything())
     
   # 1d If the gt_image_cat is NOT available:
   } else if (sum(captured_datetime_filename == available_files) == 0) {

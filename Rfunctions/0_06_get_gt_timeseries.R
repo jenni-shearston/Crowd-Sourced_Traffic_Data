@@ -23,11 +23,11 @@
 ####*********************************************************************************
 
 # BEGIN FUNCTION 
-get_gt_agg_timeseries <- function(captured_datetime_vector_filename = datetimes_of_interest, 
-                                  dir_output = 'outputs/Rtutorials', 
-                                  name_output = 'your_name_here',
-                                  gt_dir = gt_dir,
-                                  method = 'parallel') {
+get_gt_timeseries <- function(captured_datetime_vector_filename = datetimes_of_interest, 
+                              dir_output = 'outputs/Rtutorials', 
+                              name_output = 'your_name_here',
+                              gt_dir = gt_dir,
+                              method = 'parallel') {
   
   # OPTION 1
   # Use forloop 
