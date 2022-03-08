@@ -24,7 +24,7 @@
 # below to complete their own analysis with differing traffic map areas and time periods.
 # We strongly recommend you clone this repository to ensure you 
 # have the same file structure and subfolders as used in the script and functions
-# used below. For definitions of variables created in timeseries output, see glossary.
+# used below. For definitions of variables created in timeseries output, see Rglossary.
 
 # Nb For your own analysis
 # Here we list everything you will need to change to run your own version of

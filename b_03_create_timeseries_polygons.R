@@ -26,7 +26,7 @@
 # below to complete their own analysis with differing traffic map areas, time periods,
 # and spatial polygons. We strongly recommend you clone this repository to ensure you 
 # have the same file structure and subfolders as used in the script and functions
-# used below. For definitions of variables created in timeseries output, see glossary.
+# used below. For definitions of variables created in timeseries output, see Rglossary.
 
 # Nb For your own analysis
 # Here we list everything you will need to change to run your own version of
@@ -36,20 +36,20 @@
 #       Traffic colors within and specify path details (line 97)
 #     data/gt_refs: add a geotiff from the Google Traffic map area you have data 
 #       for that has been georeferenced and projected in WGS84 (gt_geo_projected)
-#       and specify the name of that file (line 127)
+#       and specify the name of that file (line 128)
 #     data/gt_image_cat: add a processed Google Traffic image from your traffic
-#       map area (captured_datetime is arbitrary) and specify file name (line 139)
+#       map area (captured_datetime is arbitrary) and specify file name (line 140)
 # You will need to assign the following directories: 
-#     gt_dir: the file path where processed Google Traffic images are stored (line 198)
+#     gt_dir: the file path where processed Google Traffic images are stored (line 199)
 #     dir_output: the file path where you would like the .fst file containing 
 #       the aggregated time series to be saved. (line 224)
 #     For directories, note that the root of the directory is specified
 #     to be the R project package (confirm with 'here()'), so include the file 
 #     path from the R project location rather than the full file path
 # You will need to specify the following variables/names:
-#     poly_id_var: the variable that uniquely identifies each polygon in your shapefile (line 103)
-#     base_date: the base or start datetime for your analysis (line 191)
-#     end_date: the end datetime for your analysis (line 192)
+#     poly_id_var: the variable that uniquely identifies each polygon in your shapefile (line 104)
+#     base_date: the base or start datetime for your analysis (line 192)
+#     end_date: the end datetime for your analysis (line 193)
 #     name_output: the name you would like to give the .fst file with the aggregated 
 #       timeseries (line 225)
 
@@ -100,6 +100,7 @@ polygons_of_interest <- st_read(here::here('data', 'polygons_of_interest',
 #    Note: This is the variable that uniquely identifies each polygon
 #          Replace 'geoid' with the name of the unique polygon id
 #          in your shapefile
+#          ID values must be coercible to numeric inputs
 poly_id_var <- 'geoid'
 
 ####*******************************************
@@ -180,7 +181,7 @@ gc()
 ####**********************************************************
 
 # 3a Create vector of captured_datetimes of interest
-#    Note: Here we use January 10, 2020 through January 16, 2020
+#    Note: Here we use March 17, 2020 through March 24, 2020
 #          Processed images for a subset of the NYC area are included in
 #          the data folder for this time period, at 3-hour intervals (n = 56).
 #          There is no need to specify only the specific 3-hour intervals in your
@@ -188,8 +189,8 @@ gc()
 #          between the base_date and end_date that gt_image_cats are not present for
 #          Change the base_date and end_date to reflect your datetimes of interest.
 captured_datetime_vector <- make_captured_datetime_vector(
-  base_date = '2020/01/10 00:30',
-  end_date = '2020/01/16 21:30')
+  base_date = '2020/03/17 00:30',
+  end_date = '2020/03/24 21:30')
 
 # 3b Set directory where processed Google Traffic images are stored
 #    Note: Change this directory to lead to where your processed Google Traffic
@@ -201,7 +202,6 @@ gt_dir <- here::here('data', 'gt_image_cat', 'bronx_example')
 captured_datetime_vector_formatted <- reformat_captured_datetime_vector(
   captured_datetime_vector = captured_datetime_vector, 
   gt_dir = gt_dir)
-
 
 ####***************************************************
 #### 4: Create Google Traffic timeseries: polygons #### 
