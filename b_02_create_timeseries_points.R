@@ -99,9 +99,9 @@ rm(a, myFunctions)
 # 1a Specify lat, lon, and id values for each point and the directory for and name of 
 #    the output file
 #    Note: id values must be coercible to numeric inputs
-points_lats <- c(40.806127, 40.800692, 40.803949)
-points_lons <- c(-73.923284, -73.913945, -73.919535)
-points_ids <- c(1, 2, 3)
+point_lats <- c(40.806127, 40.800692, 40.803949)
+point_lons <- c(-73.923284, -73.913945, -73.919535)
+point_ids <- c(1, 2, 3)
 dir_output_points <- 'bronx_example_points'
 name_output_points <- 'bronx_example_points.shp'
 
@@ -110,9 +110,9 @@ name_output_points <- 'bronx_example_points.shp'
 #          to including 0 pixels. At zoom=15 in the NYC area, 1 pixel ~ 5m. To represent
 #          a single point, we recommend a radius.deg value that corresponds to ~ 25 pixels
 #          Here, we use 0.000075 decimal degrees (~ 125 m)
-point_to_sf_wbuffer(point_lats = points_lats,
-                    point_lons = points_lons,
-                    point_ids = points_ids,
+point_to_sf_wbuffer(point_lats = point_lats,
+                    point_lons = point_lons,
+                    point_ids = point_ids,
                     radius.deg = 0.000075,
                     dir_output = dir_output_points,
                     name_output = name_output_points) 
