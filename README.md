@@ -109,15 +109,15 @@ This function converts points given in lat/lons to a spatial features object wit
 
 1. tutorial1_create_timeseries_trafficmaparea.R
 
-
+In this script we present a tutorial for creating a timeseries from processed Google Traffic images, for the entire traffic map area. As an example, we include one week of processed data for a subset of the NYC area (every 3-hrs, n=56 images). Users can edit the parameters described in the tutorial to complete their own analysis with differing traffic map areas and time periods, or can run the script as-is to recreate the dataset nyc_subarea_example_timeseries.fst. We strongly recommend users clone this repository to ensure matching with the file structure and subfolders used in this tutorial. For definitions of variables created in the timeseries output, see Rglossary.
 
 2. tutorial2_create_timeseries_points.R
 
-
+In this script we present a tutorial for creating a timeseries from processed Google Traffic images, for points specified in lat/lon with buffers of user specified radius. As an example, we include one week of processed data for a subset of the NYC area (every 3-hrs, n=56 images), and create a timeseries of three points with small buffers in the South Bronx area. Users can edit the parameters described in the tutorial to complete their own analysis with differing traffic map areas, time periods, point locations, and buffer radii, or can run the script as-is to recreate the dataset bronx_pointswbuffer_example_timeseries.fst. We strongly recommend users clone this repository to ensure matching with the file structure and subfolders used in this tutorial. For definitions of variables created in the timeseries output, see Rglossary.
 
 3. tutorial3_create_timeseries_polygons.R
 
-In this script we present a tutorial for creating a timeseries from processed Google Traffic images, for spatial polygons. As an example, we include one week of processed data for a subset of the NYC area (every 3-hrs, n=56 images), and create a time series aggregated to South Bronx census tracts. Users can edit the parameters described in the tutorial to complete their own analysis with differing traffic map areas, time periods, and spatial polygons, or can run the script as-is to recreate the dataset bronx_polygons_example_timeseries.fst. We strongly recommend users clone this repository to ensure matching with the file structure and subfolders used in this tutorial. For definitions of variables created in the timeseries output, see Rglossary.
+In this script we present a tutorial for creating a timeseries from processed Google Traffic images, for spatial polygons. As an example, we include one week of processed data for a subset of the NYC area (every 3-hrs, n=56 images), and create a timeseries aggregated to South Bronx census tracts. Users can edit the parameters described in the tutorial to complete their own analysis with differing traffic map areas, time periods, and spatial polygons, or can run the script as-is to recreate the dataset bronx_polygons_example_timeseries.fst. We strongly recommend users clone this repository to ensure matching with the file structure and subfolders used in this tutorial. For definitions of variables created in the timeseries output, see Rglossary.
 
 **APPLICATION DESCRIPTION**
 
