@@ -107,8 +107,8 @@ name_output_points <- 'bronx_example_points.shp'
 
 # 1b Convert points to a single sf object w buffer of variable size
 #    Note: You must specify at least a small buffer, as a radius.deg value of 0 corresponds
-#          to including 0 pixels. At zoom=15 in the NYC area, 1 pixel ~ 5m. To represent
-#          a single point, we recommend a radius.deg value that corresponds to ~ 25 pixels
+#          to including 0 pixels.  
+#          At zoom=15 in the NYC area, 1 pixel ~ 5m.
 #          Here, we use 0.000075 decimal degrees (~ 125 m)
 point_to_sf_wbuffer(point_lats = point_lats,
                     point_lons = point_lons,
