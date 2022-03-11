@@ -25,16 +25,20 @@
 
 # BEGIN FUNCTION 
 get_gt_agg_timeseries <- function(captured_datetime_vector_filename = datetimes_of_interest, 
-                                  dir_output = 'outputs/Rtutorials', 
-                                  name_output = 'your_name_here',
+                                  gt_agg_timeseries_output_path = gt_agg_timeseries_output_path,
                                   gt_dir = gt_dir,
-                                  method = 'parallel') {
+                                  method = 'parallel',
+                                  poly_matrix = poly_matrix) {
+  
+  # 1a Determine the available gt_image_cats 
+  available_files <- list.files(gt_dir)
   
   # OPTION 1
+  
   # Use forloop 
   if (method == 'forloop') {
   
-    # 1a Initialize a dataframe to fill
+    # 1b Initialize a dataframe to fill
     gt_agg_timeseries <- data.frame(captured_datetime = NA,
                                     poly_id = NA,
                                     gt_pixcount_maroon = NA,
@@ -48,13 +52,14 @@ get_gt_agg_timeseries <- function(captured_datetime_vector_filename = datetimes_
                                     gt_pixcount_background = NA,
                                     gt_pixcount_tot = NA)
 
-    # 1b Collect the timeseries in a loop over each gt_image_cat filename
+    # 1c Collect the timeseries in a loop over each gt_image_cat filename
     for (i in 1:length(captured_datetime_vector_filename)) {
       gt_agg_timeseries <- gt_agg_timeseries %>%
         dplyr::bind_rows(get_gt_agg_timepoint(
           captured_datetime_vector_filename[i],
           poly_matrix,
-          gt_dir))
+          gt_dir, 
+          available_files))
       if (i%%50 == 0) {print(captured_datetime_vector_filename[i])}
     }
   
@@ -62,18 +67,18 @@ get_gt_agg_timeseries <- function(captured_datetime_vector_filename = datetimes_
   # Use parallelization
   } else if (method == 'parallel') {
     
-    # 1a Set up parallelization
-    # 1a.i Get the number of cores
+    # 1b Set up parallelization
+    # 1b.i Get the number of cores
     #      Note: We subtract one to reserve a core for other tasks
     n.cores <- parallel::detectCores() - 1
-    # 1a.ii Create the cluster
+    # 1b.ii Create the cluster
     my.cluster <- parallel::makeCluster(
       n.cores, 
       type = "FORK")
-    # 1a.iii Register it to be used by %dopar%
+    # 1b.iii Register it to be used by %dopar%
     doParallel::registerDoParallel(cl = my.cluster)
   
-    #1b Collect the timeseries in parallel over each gt_image_cat filename
+    #1c Collect the timeseries in parallel over each gt_image_cat filename
     gt_agg_timeseries <- 
       foreach(
         i = 1:length(captured_datetime_vector_filename),
@@ -81,18 +86,18 @@ get_gt_agg_timeseries <- function(captured_datetime_vector_filename = datetimes_
       ) %dopar% {
         get_gt_agg_timepoint(captured_datetime_vector_filename[i],
                              poly_matrix,
-                             gt_dir)
+                             gt_dir, 
+                             available_files)
         }
      stopCluster(my.cluster)
   }
   
   # FOR EITHER OPTION
   
-  # 1c Save out gt_agg_timeseries
+  # 1d Save out gt_agg_timeseries
   gt_agg_timeseries %>% 
     dplyr::filter(!is.na(captured_datetime)) %>%
-    fst::write_fst(here::here(dir_output, 
-                         paste0(name_output, '.fst')))
+    fst::write_fst(gt_agg_timeseries_output_path)
 
 }
 

@@ -1,7 +1,7 @@
 # Tutorial: Create Google Traffic Timeseries: Spatial Polygons
 # Project: Acquisition and Analysis of Crowd-Sourced Traffic Data at Varying Spatial Scales
 # Script Authors: Jenni A. Shearston and Sebastian T. Rowland
-# Updated: 03/02/2022
+# Updated: 03/11/2022
 
 ####***********************
 #### Table of Contents #### 
@@ -9,10 +9,10 @@
 
 # N: Notes
 # 0: Preparation 
-# 1: Prepare Shapefile of Interest
+# 1: Set Function Inputs
 # 2: Prepare Polygon and Raster Inputs
 # 3: Prepare Vectors of captured_datetimes of Interest
-# 4: Create Google Traffic timeseries: Polygons
+# 4: Create Google Traffic Timeseries: Polygons
 
 ####**************
 #### N: Notes ####
@@ -22,36 +22,60 @@
 # In this script we present a tutorial for creating a time series from processed
 # Google Traffic images, for spatial polygons. As an example, we include one week of 
 # processed data for a subset of the NYC area (every 3-hrs, n=56 images), and create a time
-# series aggregated to South Bronx census tracts. Users can edit the parameters described
-# below to complete their own analysis with differing traffic map areas, time periods,
-# and spatial polygons. We strongly recommend you clone this repository to ensure you 
-# have the same file structure and subfolders as used in the script and functions
-# used below. For definitions of variables created in timeseries output, see Rglossary.
+# series aggregated to South Bronx census tracts for the time periods of March 17, 2020 
+# through March 24, 2020. Users can edit the function inputs described below to 
+# complete their own analysis with differing traffic map areas, time periods,
+# and spatial polygons. We strongly recommend you clone this repository before running
+# the tutorial to ensure you have the same file structure and subfolders as used in
+# the tutorial. For definitions of variables created in the timeseries output, see Rglossary.
 
-# Nb For your own analysis
-# Here we list everything you will need to change to run your own version of
-# this script.
-# You will need to add your own files to the following directories:
-#     data/polygons_of_interest: add the shapefile you will aggregate Google 
-#       Traffic colors within and specify path details (line 97)
-#     data/gt_refs: add a geotiff from the Google Traffic map area you have data 
-#       for that has been georeferenced and projected in WGS84 (gt_geo_projected)
-#       and specify the name of that file (line 128)
-#     data/gt_image_cat: add a processed Google Traffic image from your traffic
-#       map area (captured_datetime is arbitrary) and specify file name (line 140)
-# You will need to assign the following directories: 
-#     gt_dir: the file path where processed Google Traffic images are stored (line 199)
-#     dir_output: the file path where you would like the .fst file containing 
-#       the aggregated time series to be saved. (line 224)
-#     For directories, note that the root of the directory is specified
-#     to be the R project package (confirm with 'here()'), so include the file 
-#     path from the R project location rather than the full file path
-# You will need to specify the following variables/names:
-#     poly_id_var: the variable that uniquely identifies each polygon in your shapefile (line 104)
-#     base_date: the base or start datetime for your analysis (line 192)
-#     end_date: the end datetime for your analysis (line 193)
-#     name_output: the name you would like to give the .fst file with the aggregated 
-#       timeseries (line 225)
+# Nb Function input definitions
+#     polygons_of_interest_path: the file path (directory) for the shapefile containing 
+#       polygons that congestion color information will be aggregated within. This 
+#       polygon shapefile must include a variable that uniquely identifies each polygon
+#       and is coercible to numeric
+#     poly_id_var: the name of the variable that uniquely identifies each polygon 
+#       in polygons_of_interest
+#     gt_geo_projected_path: the file path (directory) for a traffic map image (gt_image_cat)
+#       that has been georeferenced and projected in WGS84, preferably as a geotiff
+#     gt_image_cat_path: the file path (directory) for a processed traffic map image 
+#       (gt_image_cat) of the desired traffic map area, of arbitrary datetime
+#     poly_matrix_output_path: the file path (directory) to store the matrix with the 
+#       dimensions and resolution of a traffic map image (gt_image_cat), with values
+#       corresponding to poly_ids. This is the output of function create_polygon_matrix
+#     base_date: the base or start datetime for your timeseries
+#     end_date: the end datetime for your timeseries. Only end_date OR sampling_quantity_units_direction
+#       should be set
+#     sampling_quantity_units_direction: a parameter for calculating an end date based
+#       on time units, e.g.: '3 days forward'. The parameter is specified with an 
+#       underscore between the quantity, unit, and direction, e.g., 
+#       sampling_quantity_units_direction = '3_weeks_forward'. Quantity must be specified
+#       as an integer. Available unit options include 'hours', 'days', 'weeks', 
+#       'months', and 'years'; available direction options include 'forward' and 
+#       'backward'. Only end_date OR sampling_quantity_units_direction should be set
+#     timezone = the timezone included in the filenames of the traffic map images 
+#       (gt_image_cat filenames)
+#     gt_dir: the file path where processed traffic map images (gt_image_cats) are stored
+#     captured_datetime_vector: the name of the vector that holds the output of the 
+#       make_captured_datetime_vector function; this should not need to be changed
+#     gt_agg_timeseries_output_path: the file path (directory) where the .fst file
+#       containing the aggregated time series will be saved. This is the output of
+#       function get_gt_agg_timeseries
+#     method: one of either 'parallel' or 'forloop'; determines which method to loop
+#       over all traffic map images in the captured_datetime_vector. 'parallel' uses
+#       parallelization (n-1 cores) whereas 'forloop' uses a for loop and a single core
+#     captured_datetime_vector_filename: the name of the vector that holds the formatted
+#       vector of gt_image_cat filenames. This is the output of the function 
+#       reformat_captured_datetime_vector; this should not need to be changed
+#     poly_matrix: the matrix with the dimensions and resolution of a traffic map 
+#       image (gt_image_cat), with values corresponding to poly_ids. This is the 
+#       output of function create_polygon_matrix; this should not need to be changed
+
+# Nc
+# In the use case of aggregating within the entire traffic map area, there is no need to
+# create a shapefile representing the entire traffic map area in a single polygon.
+# Instead, do not run section 2 (the create_polygon_matrix function) and 
+# set poly_matrix to 1 (poly_matrix = 1) in section 4 (the get_gt_agg_timeseries function) 
 
 ####********************
 #### 0: Preparation #### 
@@ -70,7 +94,7 @@ lapply(packages, FUN = function(x){
 rm(packages)
 
 # 0c Source our functions
-# 0c.i Get the names of all of the scripts that are just functions
+# 0c.i Get the names of all of the scripts that are functions
 myFunctions <- list.files(path = here::here('Rfunctions'))
 
 # 0c.ii Define function to run sources 
@@ -85,146 +109,95 @@ source_myFunction <- function(FunctionName){
 a <- purrr::map(myFunctions, source_myFunction)
 rm(a, myFunctions)
 
-####**************************************
-#### 1: Prepare Shapefile of Interest #### 
-####**************************************
+####*****************************
+#### 1: Set Function Inputs #### 
+####****************************
 
-# 1a Bring in shapefile of interest
-#    Note: Place your shapefile in the 'polygons_of_interest' subfolder 
-#          within the 'data' folder and change 'bronx_census_tracts' and 
-#          'bronx.shp' to reflect your file path
-polygons_of_interest <- st_read(here::here('data', 'polygons_of_interest', 
-                                           'bronx_census_tracts', 'bronx.shp'))
+# Definitions of each function input are provided in Nb above and in the Rglossary.
 
-# 1b Specify poly_id_var
-#    Note: This is the variable that uniquely identifies each polygon
-#          Replace 'geoid' with the name of the unique polygon id
-#          in your shapefile
-#          ID values must be coercible to numeric inputs
-poly_id_var <- 'geoid'
+# 1a Set inputs for function that prepares polygon and raster files
+polygons_of_interest_path = here::here('data', 'polygons_of_interest', 'bronx_census_tracts', 'bronx.shp')
+poly_id_var = 'geo_id'
+gt_geo_projected_path = here::here('data', 'gt_refs', 'gt_geo_projected.tif')
+gt_image_cat_path = here::here('data', 'gt_image_cat', 'CCC_01_01_18__02_00.png')
+poly_matrix_output_path = here::here('outputs', 'Rtutorials', 'poly_matrix_nyc.rds')
+
+# 1b Set inputs for functions that prepare vectors of datetimes of interest
+#    Note: One of either end_date or sampling_quantity_units_direction should be set as 'none' 
+#            (both should not have actual values)
+#          captured_datetime_vector is already set; it is the name of the vector that holds
+#            the output of the make_captured_datetime_vector function
+base_date = '2020/03/17 00:30'
+end_date = '2020/03/24 21:30'
+sampling_quantity_units_direction = 'none'
+timezone = 'America/Eastern'
+gt_dir = here::here('data', 'gt_image_cat', 'bronx_example')
+
+# 1c Set inputs for function that creates a timeseries of traffic data aggregated to polygon ids
+#    Note: captured_datetime_vector_filename is already set; it is the name of the vector
+#            that holds the output of the reformat_captured_datetime_vector function
+#          gt_dir was set in section 1b above
+#          poly_matrix is already set; it is the name of the matrix that holds the output of 
+#            the create_polygon_matrix function
+gt_agg_timeseries_output_path = here::here('outputs/Rtutorials', 'bronx_polygons_example_timeseries.fst')
+method = 'parallel'
 
 ####*******************************************
 #### 2: Prepare Polygon and Raster Inputs #### 
 ####*******************************************
 
-# The code in sections 2 and 3 needs to be run before the get_gt_agg_timeseries  
-# function that loops through every Google Traffic image (gt_image_cat) 
-# to put all key variables and datasets in the Global Environment 
-
-# 2a Rename the poly_id and remove non-essential variables 
-polygons_of_interest <- polygons_of_interest %>% 
-  dplyr::rename(poly_id = !!poly_id_var) %>% 
-  dplyr::select(poly_id)
-
-# 2b Make poly_id numeric
-polygons_of_interest <- polygons_of_interest %>% 
-  dplyr::mutate(poly_id = as.numeric(poly_id))
-
-# 2c Read in gt_geo_projected
-#    Note: Replace 'gt_geo_projected' with a Geotiff from your Google 
-#          Traffic map area that has been georeferenced and projected 
-#          using WGS84
-gt_geo_projected <- raster::raster(here::here('data', 'gt_refs',
-                                              'gt_geo_projected.tif'))
-
-# 2d Extract the extent (min and max lat and long) of gt_geo_projected 
-#    Note: We use gt_geo_projected's extent because we have carefully 
-#          georeferenced it
-gt_extent <- raster::extent(gt_geo_projected)
-
-# 2e Read a gt_image_cat.png as a matrix
-#    Note: The actual datetime of this image is arbitrary. Replace 
-#          'CCC_01_01_18__02_00.png' with a processed and categorized
-#          image from your own Google Traffic map area
-gt_matrix_cat <- png::readPNG(here::here('data', 'gt_image_cat', 
-                                         'CCC_01_01_18__02_00.png'))
-
-# 2f Convert gt_matrix_unprojected to raster
-gt_raster_unprojected <- raster::raster(gt_matrix_cat) 
-
-# 2g Change the extent of gt_raster_unprojected to reflect the extent of the gt_extent 
-#    Note: Now we are converting it to lat long 
-#          Here we georeference gt_raster_unprojected based on the location of 
-#          gt_geo_projected which was georeferenced carefully
-raster::extent(gt_raster_unprojected) <- c(gt_extent[1], gt_extent[2], gt_extent[3], gt_extent[4])
-
-# 2h Convert polygons_of_interest CRS to WGS84 
-#    Note: This is important because gt_raster_projected has a CRS of WGS84 which 
-#          uses lat/long and not decimal degrees or feet 
-#          Because gt_raster_unprojected has been assigned the extent of 
-#          gt_raster_projected, which is in lat/long, the polygons_of_interest
-#          file must have a CRS in lat/long in order for the rasterize
-#          command to clip the shapefile to the gt_raster_unprojected's extent
-polygons_of_interest_wgs84 <- sf::st_transform(polygons_of_interest, "WGS84")
-
-# 2i Convert polygons_of_interest to a raster with the dimensions and 
-#    resolution of gt_raster_unprojected (~ 30s to 2min)
-#    Note: The resulting raster will only have cells within the area defined by the 
-#          overlap of gt_raster_unprojected and the polygons of interest 
-#          The raster will have one column - the id of the polygon the cell belongs to
-poly_gt_crosswalk <- raster::rasterize(polygons_of_interest_wgs84, 
-                                       gt_raster_unprojected, field = "poly_id")
-
-# 2j Convert to matrix
-poly_matrix <- raster::as.matrix(poly_gt_crosswalk)
-
-# 2k Remove no longer needed files and run garbage collection to 
-#    return memory 
-#    Note: This is critical to conserve memory
-rm(poly_gt_crosswalk, polygons_of_interest_wgs84, 
-   gt_raster_unprojected, gt_extent, gt_geo_projected,
-   gt_matrix_cat)
-gc()
+# 2a Convert polygon shapefile to a matrix with the dimensions and resolution
+#    of a traffic map image (create poly_matrix)
+#    Note: Rather than using a spatial join to connect polygon ID information to 
+#          traffic map image information, we convert both the polygon shapefile and
+#          the traffic map image to matrices with the same dimensions and resolution,
+#          such that matrix location (matrix index) contains the spatial information;
+#          e.g., a point in index[1,2] is at the same spatial location in both the 
+#          polygon and traffic matrices. This function saves poly_matrix as well.
+tictoc::tic('creates poly_matrix for south bronx census tracts')
+poly_matrix <- 
+  create_polygon_matrix(polygons_of_interest_path = polygons_of_interest_path,
+                        poly_id_var = poly_id_var,
+                        gt_geo_projected_path = gt_geo_projected_path,
+                        gt_image_cat_path = gt_image_cat_path,
+                        poly_matrix_output_path = poly_matrix_output_path)
+tictoc::toc()
 
 ####**********************************************************
-#### 3: Prepare vectors of captured_datetimes of interest #### 
+#### 3: Prepare Vectors of captured_datetimes of Interest #### 
 ####**********************************************************
 
 # 3a Create vector of captured_datetimes of interest
-#    Note: Here we use March 17, 2020 through March 24, 2020
-#          Processed images for a subset of the NYC area are included in
-#          the data folder for this time period, at 3-hour intervals (n = 56).
-#          There is no need to specify only the specific 3-hour intervals in your
-#          captured datetime vector; the function will fill an NA for any datetimes
-#          between the base_date and end_date that gt_image_cats are not present for
-#          Change the base_date and end_date to reflect your datetimes of interest.
+#    Note: The function will fill an NA for any datetimes between the base_date and 
+#          end_date that gt_image_cats are not available for
+
 captured_datetime_vector <- make_captured_datetime_vector(
-  base_date = '2020/03/17 00:30',
-  end_date = '2020/03/24 21:30')
+  base_date = base_date,
+  end_date = end_date,
+  sampling_quantity_units_direction = sampling_quantity_units_direction,
+  timezone = timezone)
 
-# 3b Set directory where processed Google Traffic images are stored
-#    Note: Change this directory to lead to where your processed Google Traffic
-#          images are stored. Note that the root directory should be this R package
-#          Check with 'here()' command to confirm
-gt_dir <- here::here('data', 'gt_image_cat', 'bronx_example')
-
-# 3c Reformat vector of captured_datetimes of interest
+# 3b Reformat vector of captured_datetimes of interest as gt_image_cat filenames
 captured_datetime_vector_formatted <- reformat_captured_datetime_vector(
   captured_datetime_vector = captured_datetime_vector, 
   gt_dir = gt_dir)
 
 ####***************************************************
-#### 4: Create Google Traffic timeseries: polygons #### 
+#### 4: Create Google Traffic Timeseries: Polygons #### 
 ####***************************************************
 
 # 4a Run function to aggregate Google Traffic images to polygons
-#    Note: Set the file path where you would like the .fst file containing 
-#          the time series to be saved by assigning dir_output. Note that the 
-#          root directory should be this R package - check with 'here()' command to confirm
-#          Change the name you would like the .fst file to have with name_output
-#          It is highly recommended that you first run the function for one 
+#    Note: It is highly recommended that you first run the function for one 
 #          week of time, to get a sense of how long it will take to run
 #          your full datetime vector. A year's worth of analysis for a large
 #          city at hourly resolution may take ~ 10-15 hours.
-#          method can be set to 'parallel' to use parallelization (n-1 cores) 
-#          or 'forloop' to use a single core
 tictoc::tic('completes 1 week of bronx tracts')
 gt_timeseries <- 
   get_gt_agg_timeseries(captured_datetime_vector_filename = captured_datetime_vector_formatted, 
-                        dir_output = 'outputs/Rtutorials', 
-                        name_output = 'bronx_polygons_example_timeseries',
+                        gt_agg_timeseries_output_path = gt_agg_timeseries_output_path,
                         gt_dir = gt_dir,
-                        method = 'parallel')
+                        method = method,
+                        poly_matrix = poly_matrix)
 tictoc::toc()
 
 

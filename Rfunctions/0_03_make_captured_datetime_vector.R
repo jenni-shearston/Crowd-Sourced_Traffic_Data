@@ -27,6 +27,7 @@
 # BEGIN FUNCTION 
 make_captured_datetime_vector <- function(base_date = '2020/01/10 00:30',
                                           end_date = 'none', 
+                                          timezone = 'America/Eastern',
                                           sampling_quantity_units_direction = 'none') {
 
   # Instead of entering an end_date, you can specify sampling_quantity_units_direction
@@ -40,12 +41,12 @@ make_captured_datetime_vector <- function(base_date = '2020/01/10 00:30',
   
   # 1b Change the base_date to POSIXct format
   base_date <- base_date %>% 
-    lubridate::parse_date_time('ymd HM') 
+    lubridate::parse_date_time('ymd HM', tz = timezone) 
  
   # 1c Change the end_date to POSIXct format
   if (end_date !='none') {
     end_date <- end_date %>% 
-      lubridate::parse_date_time('ymd HM') 
+      lubridate::parse_date_time('ymd HM', tz = timezone) 
   }
   
   # 1d Get end_date if end_date is defined by sampling_quantity_units_direction

@@ -24,33 +24,31 @@
 # BEGIN FUNCTION 
 get_gt_agg_timepoint <- function(captured_datetime_filename, 
                                  poly_matrix,
-                                 gt_dir) {
+                                 gt_dir, 
+                                 available_files) {
   
   # Example value 
-  #captured_datetime_filename = 'CCC_01_10_20__00:30.png'
+  #captured_datetime_filename = 'CCC_03_24_20__21:30.png'
 
   # 1a Pull datetime from filename
   captured_datetime <- captured_datetime_filename %>% 
     stringr::str_remove_all('.png') %>%
     stringr::str_remove_all('[A-z]') %>%
     stringr::str_replace('[[:punct:]]', '') 
-    
-  # 1b Determine the available gt_image_cats 
-  available_files <- list.files(gt_dir)
   
-  # 1c If the gt_image_cat is available:
-  if (sum(captured_datetime_filename == available_files) == 1) {
+  # 1b If the gt_image_cat is available:
+  if (captured_datetime_filename %in% available_files) {
     
-    # 1c.i Read the gt_image_cat.png as a matrix
+    # 1b.i Read the gt_image_cat.png as a matrix
     gt_matrix_cat <- png::readPNG(here::here(gt_dir, captured_datetime_filename))
     
-    # 1c.ii Recover original gt values
+    # 1b.ii Recover original gt values
     #    Note: Because gt_matrix_cat was read into R as a png, the values
     #          of each pixel were divided by 256 (the max value for a png), so that 
     #          all values were between 0 and 1.
     gt_matrix_cat <- round(gt_matrix_cat * 256, 1)
     
-    # 1c.iii Create the gt_agg_timeseries
+    # 1b.iii Create the gt_agg_timeseries
     #    Note: First, we combine the poly_matrix and gt_matrix_cat matrices
     #          into a dataframe based on pixel position - in each matrix the pixel 
     #          location is indexed in the same way - rows for North-South and  
@@ -79,15 +77,15 @@ get_gt_agg_timepoint <- function(captured_datetime_filename,
       dplyr::mutate(captured_datetime = captured_datetime) %>% 
       dplyr::select(captured_datetime, poly_id, everything())
     
-    # 1c.iv Remove NA poly_ids (eg, the poly_id representing pixels 
+    # 1b.iv Remove NA poly_ids (eg, the poly_id representing pixels 
     # not within polygons_of_interest)
     gt_agg_timepoint <- gt_agg_timepoint %>% 
       dplyr::filter(!is.na(poly_id))
     
-  # 1d If the gt_image_cat is NOT available:
-  } else if (sum(captured_datetime_filename == available_files) == 0) {
+  # 1c If the gt_image_cat is NOT available:
+  } else {
     
-    # 1d.i Generate NA if the gt_image_cat file for the captured_datetime is not available
+    # 1c.i Generate NA if the gt_image_cat file for the captured_datetime is not available
     gt_agg_timepoint <- data.frame(poly_id = NA) %>% 
       mutate(gt_pixcount_maroon          = NA,
              gt_pixcount_red             = NA,
@@ -104,8 +102,9 @@ get_gt_agg_timepoint <- function(captured_datetime_filename,
       
   }
   
-  # 1e Return dataframe of aggregated timeseries 
+  # 1d Return dataframe of aggregated timeseries 
   return(gt_agg_timepoint)
+  
 }
 
 # END FUNCTION 
