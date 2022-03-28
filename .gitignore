@@ -3,3 +3,4 @@
 .RData
 .Ruserdata
 outputs/Rtutorials/poly_matrix_nyc.rds
+outputs/Rtutorials/poly_matrix_bronx3segs.rds

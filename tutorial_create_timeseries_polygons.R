@@ -130,7 +130,7 @@ poly_matrix_output_path = here::here('outputs', 'Rtutorials', 'poly_matrix_nyc.r
 base_date = '2020/03/17 00:30'
 end_date = '2020/03/24 21:30'
 sampling_quantity_units_direction = 'none'
-timezone = 'America/Eastern'
+timezone = 'America/New_York'
 gt_dir = here::here('data', 'gt_image_cat', 'bronx_example')
 
 # 1c Set inputs for function that creates a timeseries of traffic data aggregated to polygon ids
@@ -170,7 +170,6 @@ tictoc::toc()
 # 3a Create vector of captured_datetimes of interest
 #    Note: The function will fill an NA for any datetimes between the base_date and 
 #          end_date that gt_image_cats are not available for
-
 captured_datetime_vector <- make_captured_datetime_vector(
   base_date = base_date,
   end_date = end_date,

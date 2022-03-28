@@ -38,11 +38,6 @@ create_polygon_matrix <- function(polygons_of_interest_path = polygons_of_intere
   # 2a Bring in shapefile of interest
   polygons_of_interest <- st_read(polygons_of_interest_path)
   
-  # 2b Specify poly_id_var
-  #    Note: This is the variable that uniquely identifies each polygon
-  #          ID values must be coercible to numeric inputs
-  poly_id_var <- 'geoid'
-  
   ####*******************************************
   #### 3: Prepare Polygon and Raster Inputs #### 
   ####*******************************************

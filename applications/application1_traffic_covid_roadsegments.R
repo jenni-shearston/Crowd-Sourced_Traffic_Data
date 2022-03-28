@@ -1,7 +1,7 @@
 # Application: Changes in Traffic Due to the Covid-19 Pandemic - Road Segments
 # Project: Acquisition and Analysis of Crowd-Sourced Traffic Data at Varying Spatial Scales
 # Script Authors: Jenni A. Shearston and Sebastian T. Rowland
-# Updated: 03/10/2022
+# Updated: 03/25/2022
 
 ####***********************
 #### Table of Contents #### 
@@ -50,6 +50,17 @@ source_myFunction <- function(FunctionName){
 a <- purrr::map(myFunctions, source_myFunction)
 rm(a, myFunctions)
 
+####****************************
+#### 1: Load & Prepare Data #### 
+####****************************
 
+# 1a Load timeseries data
+#    Note: This timeseries was created using the 
+#          'tutorial_create_timeseries_polygons.R' with a polygon
+#          shapefile input 'bronx_3_street_segments_buffered', both
+#          available in the github repository. All needed data is
+#          included in the repository to re-create this file.
+street_segs <- read_fst(here::here('outputs', 'Rtutorials', 
+                                   'bronx_streetsegs_example_timeseries.fst'))
 
 
