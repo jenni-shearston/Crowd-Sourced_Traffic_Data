@@ -107,17 +107,9 @@ This function converts points given in lat/lons to a spatial features object wit
 
 **TUTORIAL DESCRIPTION**
 
-1. tutorial1_create_timeseries_trafficmaparea.R
+1. tutorial_create_timeseries_polygons.R
 
-In this script we present a tutorial for creating a timeseries from processed Google Traffic images, for the entire traffic map area. As an example, we include one week of processed data for a subset of the NYC area (every 3-hrs, n=56 images). Users can edit the parameters described in the tutorial to complete their own analysis with differing traffic map areas and time periods, or can run the script as-is to recreate the dataset nyc_subarea_example_timeseries.fst. We strongly recommend users clone this repository to ensure matching with the file structure and subfolders used in this tutorial. For definitions of variables created in the timeseries output, see Rglossary.
-
-2. tutorial2_create_timeseries_points.R
-
-In this script we present a tutorial for creating a timeseries from processed Google Traffic images, for points specified in lat/lon with buffers of user specified radius. As an example, we include one week of processed data for a subset of the NYC area (every 3-hrs, n=56 images), and create a timeseries of three points with small buffers in the South Bronx area. Users can edit the parameters described in the tutorial to complete their own analysis with differing traffic map areas, time periods, point locations, and buffer radii, or can run the script as-is to recreate the dataset bronx_pointswbuffer_example_timeseries.fst. We strongly recommend users clone this repository to ensure matching with the file structure and subfolders used in this tutorial. For definitions of variables created in the timeseries output, see Rglossary.
-
-3. tutorial3_create_timeseries_polygons.R
-
-In this script we present a tutorial for creating a timeseries from processed Google Traffic images, for spatial polygons. As an example, we include one week of processed data for a subset of the NYC area (every 3-hrs, n=56 images), and create a timeseries aggregated to South Bronx census tracts. Users can edit the parameters described in the tutorial to complete their own analysis with differing traffic map areas, time periods, and spatial polygons, or can run the script as-is to recreate the dataset bronx_polygons_example_timeseries.fst. We strongly recommend users clone this repository to ensure matching with the file structure and subfolders used in this tutorial. For definitions of variables created in the timeseries output, see Rglossary.
+In this script we present a tutorial for creating a timeseries from processed Google Traffic images, for spatial polygons. As an example, we include eight days of processed data for a subset of the NYC area (the South Bronx, every 3-hrs, n=56 images), and create a timeseries aggregated to South Bronx census tracts. Users can edit the parameters described in the tutorial to complete their own analysis with differing traffic map areas, time periods, and spatial polygons, or can run the script as-is to recreate the dataset bronx_polygons_example_timeseries.fst. We strongly recommend users clone this repository to ensure matching with the file structure and subfolders used in this tutorial. For definitions of variables created in the timeseries output, see Rglossary.
 
 **APPLICATION DESCRIPTION**
 
@@ -130,35 +122,62 @@ In this application we include code for reproducing the street segment applicati
 In this application we include code for reproducing the census tract application described in the accompanying manuscript (Section 4.3 of the manuscript). We compare the percent free-flowing traffic in census tracts in the South Bronx of New York City (US), before and after the announcement of COVID-19 related stay-at-home orders. We also separate analyses by quintile of census tract level household income and race/ethnicity. All data for replicating the analysis are included in this repository.
 
 **DATA DESCRIPTION**
-1. bronx_example (in data/gt_image_cat folder)
+1. census_hhincome_nation.csv (in data/census folder)
 
-Folder containing one week of processed Google Traffic images for a subset of the New York City (US) area. Images were obtained every 3 hours, for a total of n=56 images. Datetimes in the file names correspond to US/Eastern timezone (including daylight savings). 
+American Community Survey, 5 year averages, 2015-2019, containing estimates and margin of errors for US national household income quintile upper limits (whole nation). Obtained from NHGIS.
+Citation: Steven Manson, Jonathan Schroeder, David Van Riper, Tracy Kugler, and Steven Ruggles. 
+          IPUMS National Historical Geographic Information System: Version 16.0 
+          [dataset]. Minneapolis, MN: IPUMS. 2021. 
+          http://doi.org/10.18128/D050.V16.0
 
-2. CCC_01_01_18__02_00.png (in data/gt_image_cat folder)
+2. census_hhincome_tracts.csv (in data/census folder)
+
+American Community Survey, 5 year averages, 2015-2019, containing estimates and margin of errors for census tract level household income in the past 12 months (in 2019 inflation-adjusted dollars). Obtained from NHGIS.
+Citation: Steven Manson, Jonathan Schroeder, David Van Riper, Tracy Kugler, and Steven Ruggles. 
+          IPUMS National Historical Geographic Information System: Version 16.0 
+          [dataset]. Minneapolis, MN: IPUMS. 2021. 
+          http://doi.org/10.18128/D050.V16.0
+
+3. census_race_ethnicity_tracts.csv (in data/census folder)
+
+American Community Survey, 5 year averages, 2015-2019, containing estimates and margin of errors for US census tract level population race/ethnicity. Obtained from NHGIS.
+Citation: Steven Manson, Jonathan Schroeder, David Van Riper, Tracy Kugler, and Steven Ruggles. 
+          IPUMS National Historical Geographic Information System: Version 16.0 
+          [dataset]. Minneapolis, MN: IPUMS. 2021. 
+          http://doi.org/10.18128/D050.V16.0
+
+4. bronx_example (in data/gt_image_cat folder)
+
+Folder containing eight days of processed Google Traffic images for a subset of the New York City (US) area (the South Bronx). Images were obtained every 3 hours, for a total of n=64 images. Datetimes in the file names correspond to US/Eastern timezone (including daylight savings). 
+
+5. CCC_01_01_18__02_00.png (in data/gt_image_cat folder)
 
 A processed Google Traffic image (gt_image_cat - see Rglossary) used in the tutorials and applications to prepare a crosswalk file between a shapefile (polygons_of_interest - see Rglossary) and a processed Google Traffic image. The datetime of the filename corresponses to Eastern Standard Time (EST).
 
-3. gt_geo_projected.tif (in data/gt_refs folder)
+6. gt_geo_projected.tif (in data/gt_refs folder)
 
 A geotiff of the NYC area subset used in the tutorial. This geotiff has been georeferenced using four points and projected in WGS84.
 
-4. bronx_census_tracts shapefile (in data/polygons_of_interest/bronx_census_tracts folder)
+7. bronx_3_street_segments_buffered shapefile (in data/polygons_of_interest/bronx_3_street_segments_buffered folder)
+
+A shapefile containing polygons for three street segments in the South Bronx. This shapefile was made by creating 0.00015 decimal degree buffers around three selected street segments on a city-issued street centerline shapefile.
+
+8. bronx_census_tracts shapefile (in data/polygons_of_interest/bronx_census_tracts folder)
 
 A shapefile of US census tracts in Bronx County of New York City (US). This shapefile was created by filtering a shapefile of all of New York City census tracts, obtained using the R package nycgeo: https://nycgeo.mattherman.info
 
-5. bronx_polygons_example_timeseries.fst (in outputs/Rtutorials folder)
+9. manuscript_fig4_road_segs_timeplot.tif (in outputs/applications folder)
 
-An example timeseries output from tutorial3. Each row corresponds to a unique polygon/datetime observation. In this example, polygons are census tracts. For a description of all columns in the dataset, see Rglossary. 
+Figure 4 in the accompanying manuscript: a timeseries of congestion color code (CCC) for three road segments in the South Bronx: Site A, an interstate off-ramp; Site B, a small one-way street; and Site C, a two-way road, from March 17 through March 24, 2020. Line colors indicate the color of the road segments displayed in the traffic congestion maps. Lower values represent decreased speed and increased congestion. The vertical dashed line represents the press release announcing New York’s stay-at-home order.
 
-6. bronx_example_points (in outputs/Rtutorials folder)
+10. manuscript_fig5_ice_congestion_map.tif (in outputs/apllications folder)
 
-An example shapefile output from tutorial2: timeseries8_point_to_sf_wbuffer, with three circular buffers created from lat/lon points.
+Figure 5 in the accompanying manuscript: map showing the index of concentration at the extremes for household income (left panel) and race/ethnicity (right panel) for census tracts in the South Bronx of New York City. Colors indicate relative level of privilege, with dark purple indicating least privilege and yellow indicating most privilege. For household income, households with income of $24,999 or less were set as the least privileged group, while households with income of $125,000 or more were set as the most privileged group. For race/ethnicity, Non-Hispanic Black race/ethnicity was set as the least privileged group, while Non-Hispanic White race/ethnicity was set as the most privileged group. Census tracts outlined in black fell in the 10th percentile of mean free-flowing traffic from March 17 to March 24, 2020, i.e., the census tracts with the least proportion of mean free-flowing traffic during this time period. 
 
-7. bronx_pointswbuffer_example_timeseries.fst (in outputs/Rtutorials folder)
+11. bronx_polygons_example_timeseries.fst (in outputs/Rtutorials folder)
 
-An example timeseries output from tutorial2. Each row corresponds to a unique polygon/datetime observation. In this example, polygons are circular buffers built from a lat/lon point.  
+An example timeseries output from the tutorial for the South Bronx area of New York City, for March 17 to March 24, 2020. Each row corresponds to a unique polygon/datetime observation. In this example, polygons are census tracts. For a description of all columns in the dataset, see Rglossary. 
 
-8. nyc_subarea_example_timeseries.fst (in outputs/Rtutorials folder)
+12. bronx_streetsegs_example_timeseries.fst (in outputs/Rtutorials folder)
 
-An example timeseries output from tutorial1. Each row corresponds to a datetime observation, with a count of all pixel values by type in the traffic map area.
-
+A timeseries output created using the tutorial, with the polygon shapefile input 'bronx_3_street_segments_buffered', for March 17 to March 24, 2020. Each row corresponds to a unique polygon/datetime observation. In this example, polygons are (3) street segments. For a description of all columns in the dataset, see Rglossary. 
