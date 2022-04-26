@@ -33,8 +33,8 @@ ADD TITLE AND AUTHORS
 3. tutorial3_create_timeseries_polygons.R
 
 **Applications**
-1. application1_traffic_covid_roadsegments (in applications folder)
-2. applications2_ (in applications folder)
+1. application1_traffic_covid_roadsegments.R (in applications folder)
+2. application2_traffic_covid_censustracts.R (in applications folder)
 
 **Data**
 1. bronx_example (in data/gt_image_cat folder)
@@ -123,7 +123,11 @@ In this script we present a tutorial for creating a timeseries from processed Go
 
 1. application1_traffic_covid_roadsegments.R
 
-In this application we include code for reproducing the street segment application described in the accompanying manuscript (Section 4.2 of the manuscript). We compare the CCC in three street segment polygons before and after the announcment of COVID-19 related stay-at-home orders.  
+In this application we include code for reproducing the street segment application described in the accompanying manuscript (Section 4.2 of the manuscript). We compare the CCC in three street segment polygons in the South Bronx of New York City (US) before and after the announcment of COVID-19 related stay-at-home orders. All data for replicating the analysis are included in this repository.  
+
+2. application2_traffic_covid_censustracts.R
+
+In this application we include code for reproducing the census tract application described in the accompanying manuscript (Section 4.3 of the manuscript). We compare the percent free-flowing traffic in census tracts in the South Bronx of New York City (US), before and after the announcement of COVID-19 related stay-at-home orders. We also separate analyses by quintile of census tract level household income and race/ethnicity. All data for replicating the analysis are included in this repository.
 
 **DATA DESCRIPTION**
 1. bronx_example (in data/gt_image_cat folder)
