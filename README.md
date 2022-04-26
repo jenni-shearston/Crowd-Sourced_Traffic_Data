@@ -23,28 +23,28 @@ ADD TITLE AND AUTHORS
 3. timeseries3_make_captured_datetime_vector.R (in Rfunctions folder)
 4. timeseries4_reformat_datetime_vector.R (in Rfunctions folder)
 5. timeseries5_two_digit_pad.R (in Rfunctions folder)
-6. timeseries6_get_gt_timeseries.R (in Rfunctions folder)
-7. timeseries7_get_gt_timepoint.R (in Rfunctions folder)
-8. timeseries8_point_to_sf_wbuffer.R (in Rfunctions folder)
+6. timeseries6_create_polygon_matrix.R (in Rfunctions folder)
 
 **Tutorials**
-1. tutorial1_create_timeseries_trafficmaparea.R
-2. tutorial2_create_timeseries_points.R
-3. tutorial3_create_timeseries_polygons.R
+1. tutorial_create_timeseries_polygons.R
 
 **Applications**
 1. application1_traffic_covid_roadsegments.R (in applications folder)
 2. application2_traffic_covid_censustracts.R (in applications folder)
 
 **Data**
-1. bronx_example (in data/gt_image_cat folder)
-2. CCC_01_01_18__02_00.png (in data/gt_image_cat folder)
-3. gt_geo_projected.tif (in data/gt_refs folder)
-4. bronx_census_tracts shapefile (in data/polygons_of_interest/bronx_census_tracts folder)
-5. bronx_polygons_example_timeseries.fst (in outputs/Rtutorials folder)
-6. bronx_example_points (in outputs/Rtutorials folder)
-7. bronx_pointswbuffer_example_timeseries.fst (in outputs/Rtutorials folder)
-8. nyc_subarea_example_timeseries.fst (in outputs/Rtutorials folder)
+1. census_hhincome_nation.csv (in data/census folder)
+2. census_hhincome_tracts.csv (in data/census folder)
+3. census_race_ethnicity_tracts.csv (in data/census folder)
+4. bronx_example (in data/gt_image_cat folder)
+5. CCC_01_01_18__02_00.png (in data/gt_image_cat folder)
+6. gt_geo_projected.tif (in data/gt_refs folder)
+7. bronx_3_street_segments_buffered shapefile (in data/polygons_of_interest/bronx_3_street_segments_buffered folder)
+8. bronx_census_tracts shapefile (in data/polygons_of_interest/bronx_census_tracts folder)
+9. manuscript_fig4_road_segs_timeplot.tif (in outputs/applications folder)
+10. manuscript_fig5_ice_congestion_map.tif (in outputs/apllications folder)
+11. bronx_polygons_example_timeseries.fst (in outputs/Rtutorials folder)
+12. bronx_streetsegs_example_timeseries.fst (in outputs/Rtutorials folder)
 
 **Documentation**
 1. Rglossary
