@@ -93,17 +93,9 @@ This function reformats the vector of datetimes created by analysis3_make_captur
 
 This function adds two zeroes to the left of the input. 
 
-6. timeseries6_get_gt_timeseries.R (in Rfunctions folder)
+6. timeseries6_create_polygon_matrix.R (in Rfunctions folder)
 
-This function loops function timeseries7_get_gt_timepoint over all processed traffic map images (gt_image_cat filenames - see Rglossary) included in a specified vector of datetimes (captured_datetime_vector - see Rglossary), creating a timeseries of traffic map data for the entire traffic map area.
-
-7. timeseries7_get_gt_timepoint.R (in Rfunctions folder)
-
-This function counts the number of pixels of each value (gt_cat values - see Rglossary - which correspond to traffic colors and other parameters) for the entire traffic map area for a single inputted datetime.
-
-8. timeseries8_point_to_sf_wbuffer.R (in Rfunctions folder)
-
-This function converts points given in lat/lons to a spatial features object with a buffer of size radius.deg (in decimal degrees) around each point, and assigns a user provided unique ID to each point/buffer combination.
+This function converts a polygon shapefile (polygons of interest) to a matrix with the dimensions and resolution of a matrix of a traffic image (gt_image_cat), and both writes and outputs the matrix to an R object called poly_matrix.
 
 **TUTORIAL DESCRIPTION**
 
