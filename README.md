@@ -33,7 +33,7 @@ ADD TITLE AND AUTHORS
 3. tutorial3_create_timeseries_polygons.R
 
 **Applications**
-1. applications1_ (in applications folder)
+1. application1_traffic_covid_roadsegments (in applications folder)
 2. applications2_ (in applications folder)
 
 **Data**
@@ -120,6 +120,10 @@ In this script we present a tutorial for creating a timeseries from processed Go
 In this script we present a tutorial for creating a timeseries from processed Google Traffic images, for spatial polygons. As an example, we include one week of processed data for a subset of the NYC area (every 3-hrs, n=56 images), and create a timeseries aggregated to South Bronx census tracts. Users can edit the parameters described in the tutorial to complete their own analysis with differing traffic map areas, time periods, and spatial polygons, or can run the script as-is to recreate the dataset bronx_polygons_example_timeseries.fst. We strongly recommend users clone this repository to ensure matching with the file structure and subfolders used in this tutorial. For definitions of variables created in the timeseries output, see Rglossary.
 
 **APPLICATION DESCRIPTION**
+
+1. application1_traffic_covid_roadsegments.R
+
+In this application we include code for reproducing the street segment application described in the accompanying manuscript (Section 4.2 of the manuscript). We compare the CCC in three street segment polygons before and after the announcment of COVID-19 related stay-at-home orders.  
 
 **DATA DESCRIPTION**
 1. bronx_example (in data/gt_image_cat folder)
