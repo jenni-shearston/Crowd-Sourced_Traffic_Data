@@ -18,7 +18,10 @@
 ####**************
 
 # Na Description
-# In this script 
+# In this script we demonstrate that timeseries of traffic maps can be used to 
+# detect and characterize changes in traffic. We analyze changes in traffic
+# at three street segments in the South Bronx of New York City, before and after
+# announcement of COVID-19 related stay-at-home orders. 
 
 ####********************
 #### 0: Preparation #### 

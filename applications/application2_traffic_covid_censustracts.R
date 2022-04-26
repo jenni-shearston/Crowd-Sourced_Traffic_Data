@@ -10,16 +10,22 @@
 
 # N: Notes
 # 0: Preparation 
-# 1: Load & Prepare Data
-# 2: Compare CCC Before vs During Stay-at-home Orders (Table 1)
-# 3: Create Ordinal Timeseries Plot (Figure 4)
+# 1: Load & Prepare Congestion Data
+# 2: Load & Prepare Census Demographic Data
+# 3: Compare CCC Before vs During Stay-at-home Orders (Table 2)
+# 4: Create Map Showing Most Congested CCC by ICE Vars (Fig 5)
 
 ####**************
 #### N: Notes ####
 ####**************
 
 # Na Description
-# In this script 
+# In this script we demonstrate the value of using larger spatial units, such as
+# census tracts, to evaluate variation in changes in traffic after policy 
+# implementation by SES characteristics. We analyze changes in traffic
+# at census tracts in the South Bronx of New York City, before and after
+# announcement of COVID-19 related stay-at-home orders, by varying levels of
+# income and racial/ethnic privilege. 
 
 # Nb Index of Concentration at the Extremes Calculation
 # ICEi = (Ai-Pi)/Ti
