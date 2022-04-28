@@ -9,15 +9,15 @@ ADD TITLE AND AUTHORS
 
 **Scripts**
 
-*Acquiring crowd-sourced traffic data*
-1. acquisition1_Load_Traffic_Map_Array.html 
-2. acquisition2_Download_Traffic_Map_Array 
-3. acquisition3_Matlab stitching it together script
+*Acquiring crowd-sensed traffic data*
+1. Load_Traffic_Map_Array.html 
+2. Download_Traffic_Map_Array 
+3. Read_Traffic_Map_Array.m
 
-*Processing crowd-sourced traffic data*
-1. processing1_assigning color codes etc script
+*Processing crowd-sensed traffic data*
+1. name TBD - assigning color codes etc script
 
-*Creating a timeseries of crowd-sourced traffic data*
+*Creating a timeseries of crowd-sensed traffic data*
 1. timeseries1_get_gt_agg_timeseries.R (in Rfunctions folder)
 2. timeseries2_get_gt_agg_timepoint.R (in Rfunctions folder)
 3. timeseries3_make_captured_datetime_vector.R (in Rfunctions folder)
@@ -51,27 +51,27 @@ ADD TITLE AND AUTHORS
 
 **SCRIPT DESCRIPTION**
 
-*Acquiring crowd-sourced traffic data*
+*Acquiring crowd-sensed traffic data*
 
-1. acquisition1_Load_Traffic_Map_Array.html 
+1. Load_Traffic_Map_Array.html 
 
+HTML script for displaying a traffic map of arbitrary corrdinates and zoom level for debugging scripts and defining the mapped area.
 
+2. Download_Traffic_Map_Array 
 
-2. acquisition2_Download_Traffic_Map_Array 
+C shell script for downloading an array of traffic maps and saving them to image (png) files.
 
+3. Read_Traffic_Map_Array.m
 
+Matlab script for stitching together individual traffic map tiles into one image and display them on a computer monitor. 
 
-3. acquisition3_ADD TITLE 
-
-
-
-*Processing crowd-sourced traffic data*
+*Processing crowd-sensed traffic data*
 
 1. processing1_assigning color codes etc script
 
 
 
-*Creating a timeseries of crowd-sourced traffic data*
+*Creating a timeseries of crowd-sensed traffic data*
 
 1. timeseries1_get_gt_agg_timeseries.R (in Rfunctions folder)
 
