@@ -1,0 +1,61 @@
+#!/bin/csh
+
+# user should modify the following parameters
+# directory to which image files should be saved:
+cd /Users/user_name/work_directory/IMAGES
+# specify location of "Google Chrome" internet browser
+alias chrome '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
+# specify complete path to HTML script
+set Script = \
+   'file:////Users/user_name/HTML_Scripts/Load_Traffic_Map.html'
+# LatLong of the center of map array (for Manhattan, NYC):
+set Lat_c  =  40.79
+set Long_c = -73.97
+# number of latitude and longitude tiles of downloaded map array:
+set N_lat = 6
+set N_long = 3
+# Excluded tiles:
+set X_long = (1 1 1 2 3 3)
+set X_lat  = (4 5 6 6 1 2)
+# Zoom level:
+set Z = 15
+# Number of pixels along a side of a square traffic map tile
+set N_pix = 1000
+
+# the following code can be modified if needed
+set R_Earth = 6378137
+set dx_Equator = 0.009330692
+set COS = `echo $Lat_c | awk '{printf "%.15f\n",cos($1*atan2(0,-1)/180)}'`
+set Circumference_Equator = \
+      `echo $R_Earth | awk '{printf "%.15f\n",2*atan2(0,-1)*$1}'`
+set dx_lat = \
+    `echo $Z $dx_Equator $COS | awk '{printf "%.15f\n", $3 * $2 * 2^(24-$1)}'`
+set d_theta=`echo $N_pix $dx_lat $Circumference_Equator | \
+     awk '{printf "%.15f\n",$1*$2/$3*360}'`
+set d_phi=`echo $d_theta $COS | awk '{printf "%.15f\n",$1/$2}'`
+set TimeStamp="`date +%m_%d_%y__%H:%M`"
+set noglob
+foreach i_lat (`seq 1 1 $N_lat`)
+ foreach i_long (`seq 1 1 $N_long`)
+   set Download=1
+   if ($#X_long>0) then
+     foreach m (`seq 1 1 $#X_long`)
+       if (($i_lat == $X_lat[$m]) && ($i_long == $X_long[$m])) then
+         set Download=0
+       endif
+     end
+   endif  
+   if ($Download == 1) then
+     set Long = `echo $Long_c $i_long $d_phi $N_long | \
+                 awk '{printf "%.10f\n", $1+(-0.5*$4-0.5+$2)*$3}'`
+     set Lat = `echo $Lat_c $i_lat $d_theta $N_lat | \
+                 awk '{printf "%.10f\n", $1+(-0.5*$4-0.5+$2)*$3}'`
+     set URL=$Script'?lat='$Lat'&long='$Long'&z='$Z'&n='$N_pix
+     echo $URL
+     set OutFile = "TrafficMap_"$i_lat"_"$i_long"_"$TimeStamp".png"
+     chrome --headless --virtual-time-budget=10000000 \
+            --disable-gpu --window-size=$N_pix,$N_pix \
+            --screenshot=$OutFile $URL
+   endif	    
+ end
+end
