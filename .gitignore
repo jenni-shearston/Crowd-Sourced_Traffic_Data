@@ -4,3 +4,5 @@
 .Ruserdata
 outputs/Rtutorials/poly_matrix_nyc.rds
 outputs/Rtutorials/poly_matrix_bronx3segs.rds
+applications/application1_traffic_covid_roadsegments.R
+outputs/applications/manuscript_fig4_road_segs_timeplot.tif
