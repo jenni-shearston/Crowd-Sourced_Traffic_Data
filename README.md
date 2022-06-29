@@ -29,7 +29,7 @@ ADD TITLE AND AUTHORS
 1. tutorial_create_timeseries_polygons.R
 
 **Applications**
-1. application1_traffic_covid_roadsegments.R (in applications folder)
+1. application1_roadsegs_diurnal_traffic.R (in applications folder)
 2. application2_traffic_covid_censustracts.R (in applications folder)
 
 **Data**
@@ -105,9 +105,9 @@ In this script we present a tutorial for creating a timeseries from processed Go
 
 **APPLICATION DESCRIPTION**
 
-1. application1_traffic_covid_roadsegments.R
+1. application1_roadsegs_diurnal_traffic.R 
 
-In this application we include code for reproducing the street segment application described in the accompanying manuscript (Section 4.2 of the manuscript). We compare the CCC in three street segment polygons in the South Bronx of New York City (US) before and after the announcment of COVID-19 related stay-at-home orders. All data for replicating the analysis are included in this repository.  
+In this application we include code for reproducing the diurnal road segment application described in the accompanying manuscript (Section 6.2 of the manuscript). We describe diurnal patterns in CCC in three street segment polygons in the South Bronx of New York City (US). All data for replicating the analysis are included in this repository.  
 
 2. application2_traffic_covid_censustracts.R
 
@@ -158,9 +158,9 @@ A shapefile containing polygons for three street segments in the South Bronx. Th
 
 A shapefile of US census tracts in Bronx County of New York City (US). This shapefile was created by filtering a shapefile of all of New York City census tracts, obtained using the R package nycgeo: https://nycgeo.mattherman.info
 
-9. manuscript_fig4_road_segs_timeplot.tif (in outputs/applications folder)
+9. manuscript_fig4_road_segs_diurnalplot.tif (in outputs/applications folder)
 
-Figure 4 in the accompanying manuscript: a timeseries of congestion color code (CCC) for three road segments in the South Bronx: Site A, an interstate off-ramp; Site B, a small one-way street; and Site C, a two-way road, from March 17 through March 24, 2020. Line colors indicate the color of the road segments displayed in the traffic congestion maps. Lower values represent decreased speed and increased congestion. The vertical dashed line represents the press release announcing New York’s stay-at-home order.
+Figure 4 in the accompanying manuscript: diurnal pattern of congestion color code (CCC) for three road segments in the South Bronx: Site A, an interstate off-ramp; Site B, a small one-way street; and Site C, a two-way road, on March 17. Line colors indicate the color of the road segments displayed in the traffic congestion maps. Lower values represent decreased speed and increased congestion.
 
 10. manuscript_fig5_ice_congestion_map.tif (in outputs/apllications folder)
 
