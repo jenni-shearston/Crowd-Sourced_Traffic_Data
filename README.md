@@ -48,7 +48,8 @@ ADD AUTHORS. A reproducible method for acquisition, processing, and analysis of 
 
 **Documentation**
 1. Rglossary
-
+<br />
+<br />
 **METHOD SCRIPTS DESCRIPTION**
 
 *Acquiring crowd-sensed traffic data*
