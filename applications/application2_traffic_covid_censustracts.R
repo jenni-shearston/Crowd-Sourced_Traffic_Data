@@ -67,7 +67,7 @@ rm(packages)
 #          shapefile input 'bronx_census_tracts', both
 #          available in the github repository. All needed data is
 #          included in the repository to re-create this file.
-census_tracts <- read_fst(here::here('outputs', 'Rtutorials', 
+census_tracts <- read_fst(here::here('outputs', 'areal_timeseries_tutorial', 
                                      'bronx_polygons_example_timeseries.fst'))
 
 # 1b Convert captured_datetime var to posixct, convert poly_id to character, and 

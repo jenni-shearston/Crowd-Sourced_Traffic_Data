@@ -10,7 +10,7 @@
 # N: Notes
 # 0: Preparation 
 # 1: Load & Prepare Data
-# 2:
+# 2: Create diurnal plots for each road segment (Figure 4)
 
 ####**************
 #### N: Notes ####
@@ -47,7 +47,7 @@ rm(packages)
 #          shapefile input 'bronx_3_street_segments_buffered', both
 #          available in the github repository. All needed data is
 #          included in the repository to re-create this file.
-road_segs <- read_fst(here::here('outputs', 'Rtutorials', 
+road_segs <- read_fst(here::here('outputs', 'areal_timeseries_tutorial', 
                                  'bronx_streetsegs_example_timeseries.fst'))
 
 # 1b Convert captured_datetime var to posixct, create label for poly_id variable
