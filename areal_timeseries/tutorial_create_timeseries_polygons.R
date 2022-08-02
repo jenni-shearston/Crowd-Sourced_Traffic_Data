@@ -95,11 +95,11 @@ rm(packages)
 
 # 0c Source our functions
 # 0c.i Get the names of all of the scripts that are functions
-myFunctions <- list.files(path = here::here('Rfunctions'))
+myFunctions <- list.files(path = here::here('areal_timeseries','Rfunctions'))
 
 # 0c.ii Define function to run sources 
 source_myFunction <- function(FunctionName){
-  source(here::here('Rfunctions', FunctionName))
+  source(here::here('areal_timeseries', 'Rfunctions', FunctionName))
 }
 
 # 0c.iii Source all the function scripts
@@ -120,7 +120,7 @@ polygons_of_interest_path = here::here('data', 'polygons_of_interest', 'bronx_ce
 poly_id_var = 'geo_id'
 gt_geo_projected_path = here::here('data', 'gt_refs', 'gt_geo_projected.tif')
 gt_image_cat_path = here::here('data', 'gt_image_cat', 'CCC_01_01_18__02_00.png')
-poly_matrix_output_path = here::here('outputs', 'Rtutorials', 'poly_matrix_nyc.rds')
+poly_matrix_output_path = here::here('outputs', 'areal_timeseries_tutorial', 'poly_matrix_nyc.rds')
 
 # 1b Set inputs for functions that prepare vectors of datetimes of interest
 #    Note: One of either end_date or sampling_quantity_units_direction should be set as 'none' 
@@ -139,7 +139,7 @@ gt_dir = here::here('data', 'gt_image_cat', 'bronx_example')
 #          gt_dir was set in section 1b above
 #          poly_matrix is already set; it is the name of the matrix that holds the output of 
 #            the create_polygon_matrix function
-gt_agg_timeseries_output_path = here::here('outputs/Rtutorials', 'bronx_polygons_example_timeseries.fst')
+gt_agg_timeseries_output_path = here::here('outputs/areal_timeseries_tutorial', 'bronx_polygons_example_timeseries.fst')
 method = 'parallel'
 
 ####*******************************************
