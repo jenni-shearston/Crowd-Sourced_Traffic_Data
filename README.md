@@ -1,23 +1,26 @@
 # Crowd-Sourced_Traffic_Data
 
-In this repository, we provide scripts, tutorials, sample data, and applications for acquiring, processing, and analyzing timeseries of real-time, crowd-sourced traffic data, at varying spatial scales. 
+In this repository, we provide scripts, tutorials, sample data, and applications for acquiring, processing, and analyzing time series of real-time, crowd-sensed traffic data, at user-specified spatial scales. 
 
 Please see the accompanying manuscript for descriptions and details:
-ADD TITLE AND AUTHORS
+ADD AUTHORS. A reproducible method for acquisition, processing, and analysis of crowd-sensed traffic data at user-specified spatial scales. 
 
 **TABLE OF CONTENTS**
 
-**Scripts**
+**Method Scripts**
 
-*Acquiring crowd-sensed traffic data*
-1. Load_Traffic_Map_Array.html 
+*Acquiring crowd-sensed traffic data (acquisition folder)*
+1. Load_Traffic_Map.html
 2. Download_Traffic_Map_Array 
-3. Read_Traffic_Map_Array.m
+3. Load_Traffic_Map_Array.m
 
-*Processing crowd-sensed traffic data*
-1. name TBD - assigning color codes etc script
+*Image segmentation of crowd-sensed traffic data (image_segmentation folder)*
+1. Determine_ActiveStreets.m 
+2. Analyze_Time_Series.m 
+3. View_CCC.m 
 
-*Creating a timeseries of crowd-sensed traffic data*
+*Creating a time series of crowd-sensed traffic data (areal_timeseries folder)*
+1. tutorial_create_timeseries_polygons.R
 1. timeseries1_get_gt_agg_timeseries.R (in Rfunctions folder)
 2. timeseries2_get_gt_agg_timepoint.R (in Rfunctions folder)
 3. timeseries3_make_captured_datetime_vector.R (in Rfunctions folder)
@@ -25,12 +28,9 @@ ADD TITLE AND AUTHORS
 5. timeseries5_two_digit_pad.R (in Rfunctions folder)
 6. timeseries6_create_polygon_matrix.R (in Rfunctions folder)
 
-**Tutorials**
-1. tutorial_create_timeseries_polygons.R
-
-**Applications**
-1. application1_roadsegs_diurnal_traffic.R (in applications folder)
-2. application2_traffic_covid_censustracts.R (in applications folder)
+**Applications (applications folder)**
+1. application1_roadsegs_diurnal_traffic.R 
+2. application2_traffic_covid_censustracts.R 
 
 **Data**
 1. census_hhincome_nation.csv (in data/census folder)
@@ -42,18 +42,18 @@ ADD TITLE AND AUTHORS
 7. bronx_3_street_segments_buffered shapefile (in data/polygons_of_interest/bronx_3_street_segments_buffered folder)
 8. bronx_census_tracts shapefile (in data/polygons_of_interest/bronx_census_tracts folder)
 9. manuscript_fig4_road_segs_timeplot.tif (in outputs/applications folder)
-10. manuscript_fig5_ice_congestion_map.tif (in outputs/apllications folder)
-11. bronx_polygons_example_timeseries.fst (in outputs/Rtutorials folder)
-12. bronx_streetsegs_example_timeseries.fst (in outputs/Rtutorials folder)
+10. manuscript_fig5_ice_congestion_map.tif (in outputs/aplications folder)
+11. bronx_polygons_example_timeseries.fst (in outputs/areal_timeseries_tutorial folder)
+12. bronx_streetsegs_example_timeseries.fst (in outputs/areal_timeseries_tutorial folder)
 
 **Documentation**
 1. Rglossary
 
-**SCRIPT DESCRIPTION**
+**METHOD SCRIPTS DESCRIPTION**
 
 *Acquiring crowd-sensed traffic data*
 
-1. Load_Traffic_Map_Array.html 
+1. Load_Traffic_Map.html 
 
 HTML script for displaying a traffic map of arbitrary corrdinates and zoom level for debugging scripts and defining the mapped area.
 
@@ -61,13 +61,21 @@ HTML script for displaying a traffic map of arbitrary corrdinates and zoom level
 
 C shell script for downloading an array of traffic maps and saving them to image (png) files.
 
-3. Read_Traffic_Map_Array.m
+3. Load_Traffic_Map_Array.m
 
 Matlab script for stitching together individual traffic map tiles into one image and display them on a computer monitor. 
 
-*Processing crowd-sensed traffic data*
+*Image segmentation of crowd-sensed traffic data*
 
-1. processing1_assigning color codes etc script
+1. Determine_ActiveStreets.m 
+
+
+
+2. Analyze_Time_Series.m 
+
+
+
+3. View_CCC.m 
 
 
 
