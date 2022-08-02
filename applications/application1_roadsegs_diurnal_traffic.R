@@ -95,7 +95,7 @@ road_segs <- road_segs %>%
 ####**************************************************************
 
 # 2a Add points halfway between observations to make line colors
-#    split bewteen observations
+#    split between observations
 mid_points <- road_segs %>% 
   mutate(hour = hour + 1.5) %>% 
   group_by(poly_name) %>% 
@@ -121,7 +121,7 @@ CCC_colors <- c('red', 'orange', 'green')
 # 2d Create line plot
 road_segs_lineplot <- road_segs_for_lineplot %>% 
   ggplot(aes(x = hour, y = CCC)) + 
-  geom_line(aes(color = color, group = 1)) + 
+  geom_line(aes(color = color, group = 1), size = 2) + 
   facet_wrap(vars(poly_name), nrow = 1, ncol = 3) +
   theme_bw() + 
   xlab('Hour of Day') +
