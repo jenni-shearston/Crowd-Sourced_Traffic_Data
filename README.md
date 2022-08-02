@@ -5,9 +5,9 @@ In this repository, we provide scripts, tutorials, sample data, and applications
 Please see the accompanying manuscript for descriptions and details:
 ADD AUTHORS. A reproducible method for acquisition, processing, and analysis of crowd-sensed traffic data at user-specified spatial scales. 
 
-**TABLE OF CONTENTS**
+##**TABLE OF CONTENTS**
 
-**Method Scripts**
+###**Method Scripts**
 
 *Acquiring crowd-sensed traffic data (acquisition folder)*
 1. Load_Traffic_Map.html
@@ -28,11 +28,11 @@ ADD AUTHORS. A reproducible method for acquisition, processing, and analysis of 
 5. timeseries5_two_digit_pad.R (in Rfunctions folder)
 6. timeseries6_create_polygon_matrix.R (in Rfunctions folder)
 
-**Applications (applications folder)**
+###**Applications (applications folder)**
 1. application1_roadsegs_diurnal_traffic.R 
 2. application2_traffic_covid_censustracts.R 
 
-**Data**
+###**Data**
 1. census_hhincome_nation.csv (in data/census folder)
 2. census_hhincome_tracts.csv (in data/census folder)
 3. census_race_ethnicity_tracts.csv (in data/census folder)
@@ -46,11 +46,10 @@ ADD AUTHORS. A reproducible method for acquisition, processing, and analysis of 
 11. bronx_polygons_example_timeseries.fst (in outputs/areal_timeseries_tutorial folder)
 12. bronx_streetsegs_example_timeseries.fst (in outputs/areal_timeseries_tutorial folder)
 
-**Documentation**
+###**Documentation**
 1. Rglossary
-<br />
-<br />
-**METHOD SCRIPTS DESCRIPTION**
+
+##**METHOD SCRIPTS DESCRIPTION**
 
 *Acquiring crowd-sensed traffic data*
 
