@@ -1,7 +1,7 @@
 # Function: Obtain gt_agg_timeseries for a captured_datetime
 # Project: Acquisition and Analysis of Crowd-Sourced Traffic Data at Varying Spatial Scales
 # Script Authors: Sebastian T. Rowland and Jenni A. Shearston 
-# Updated: 03/02/2022
+# Updated: 08/11/2023
 
 ####***********************
 #### Table of Contents #### 
