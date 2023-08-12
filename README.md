@@ -150,7 +150,7 @@ Folder containing eight days of processed Google Traffic images for a subset of 
 
 5. CCC_01_01_18__02_00.png (in data/gt_image_cat folder)
 
-A processed Google Traffic image (gt_image_cat - see Rglossary) used in the tutorials and applications to prepare a crosswalk file between a shapefile (polygons_of_interest - see Rglossary) and a processed Google Traffic image. The datetime of the filename corresponses to Eastern Standard Time (EST).
+A processed Google Traffic image (gt_image_cat - see Rglossary) used in the tutorials and applications to prepare a crosswalk file between a shapefile (polygons_of_interest - see Rglossary) and a processed Google Traffic image. The datetime of the filename corresponses to US/Eastern timezone (ET).
 
 6. gt_geo_projected.tif (in data/gt_refs folder)
 
